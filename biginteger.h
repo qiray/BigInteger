@@ -25,14 +25,12 @@
 #include<vector>
 #include<sstream>
 #include <climits>
-using namespace std;
 
 typedef unsigned int digit;
 typedef unsigned long long uLong;
 
 /*TODO: 
 remove warnings
-remove using namespace stt
 add C++11 features
 move some public functions to private
 add comments
@@ -46,15 +44,9 @@ const uLong Base3 = (uLong)Base2*10;
 const int sizeOfDigit = sizeof(digit), sizeOfuLong = sizeof(uLong);
 
 class BigInteger {
-    vector<digit> num;
-    long size;
-    bool sign;
-    void fromDecimal(uLong*&, long&, digit&);
-    void deleteLeadingZeroes();
 public:
-    long getSize() const {return size;};
     BigInteger();
-    BigInteger(string);
+    BigInteger(std::string);
     BigInteger(const char*);
     BigInteger(long);
     BigInteger(long long);
@@ -62,6 +54,9 @@ public:
     BigInteger(digit);
     BigInteger(uLong);
     BigInteger(unsigned long);
+
+    long getSize() const {return size;};
+
     BigInteger& operator=(const BigInteger&);
     friend BigInteger abs(const BigInteger&);
     BigInteger operator-() const;
@@ -81,16 +76,31 @@ public:
     BigInteger operator%=(const BigInteger&); 
     friend bool operator==(const BigInteger&, const BigInteger&);
     friend bool operator!=(const BigInteger&, const BigInteger&);
-    friend bool operator> (const BigInteger&, const BigInteger&);
-    friend bool operator< (const BigInteger&, const BigInteger&);
+    friend bool operator>(const BigInteger&, const BigInteger&);
+    friend bool operator<(const BigInteger&, const BigInteger&);
     friend bool operator>=(const BigInteger&, const BigInteger&);
-    friend bool operator<=(const BigInteger&, const BigInteger&); 
-    friend bool absCompare(const BigInteger&, const BigInteger&);
-    friend istream& operator>>(istream&, BigInteger&);
-    friend ostream& operator<<(ostream&, const BigInteger&);
+    friend bool operator<=(const BigInteger&, const BigInteger&);
+
+    friend std::istream& operator>>(std::istream&, BigInteger&);
+    friend std::ostream& operator<<(std::ostream&, const BigInteger&);
     friend BigInteger operator>>(const BigInteger&, const BigInteger&);
-    friend BigInteger operator<<(const BigInteger&, const BigInteger&);     
+    friend BigInteger operator<<(const BigInteger&, const BigInteger&);
+
     friend BigInteger pow(BigInteger, BigInteger);
+    friend BigInteger gcd(const BigInteger&, const BigInteger&);
+    friend BigInteger lcm(const BigInteger&, const BigInteger&);
+    friend BigInteger fib(const BigInteger&);
+    std::string toString(int, int);
+
+    unsigned int toUint() const;
+private:
+    std::vector<digit> num;
+    long size;
+    bool sign;
+    void fromDecimal(uLong*&, long&, digit&);
+    void deleteLeadingZeroes();
+
+    friend bool absCompare(const BigInteger&, const BigInteger&);
     friend void bigDivide(const BigInteger&, const BigInteger&, BigInteger&, BigInteger&);
     friend void tinyDivide(const BigInteger&, BigInteger&, digit, digit&);
     friend void tinyMul(const BigInteger&, digit, BigInteger&);
@@ -98,11 +108,6 @@ public:
     friend BigInteger tinyMul1(const BigInteger&, digit);
     friend void bigAdd(const BigInteger&, const BigInteger&, BigInteger&);
     friend void bigSub(const BigInteger&, const BigInteger&, BigInteger&);
-    friend BigInteger gcd(const BigInteger&, const BigInteger&);
-    friend BigInteger lcm(const BigInteger&, const BigInteger&);
-    friend BigInteger fib(const BigInteger&);
-    unsigned int toUint() const;
-    string toString(int, int);
 };
 
 BigInteger log10(BigInteger);

@@ -1,7 +1,7 @@
 
 #include "biginteger.h"
 
-ostream& operator<<(ostream& s, const BigInteger& number) {
+std::ostream& operator<<(std::ostream& s, const BigInteger& number) {
     if (number.size == 0) {
         s << "0";
         return s;
@@ -28,8 +28,8 @@ ostream& operator<<(ostream& s, const BigInteger& number) {
     return s;
 }
 
-istream& operator>>(istream& s, BigInteger& number) {
-    string tmp;
+std::istream& operator>>(std::istream& s, BigInteger& number) {
+    std::string tmp;
     s >> tmp;
     number = tmp;
     return s;
@@ -41,7 +41,7 @@ BigInteger::BigInteger() {
     num.push_back(0);
 }
 
-BigInteger::BigInteger(string s1) {
+BigInteger::BigInteger(std::string s1) {
     while(s1[0] == ' ' || s1[0] == '\t')
         s1.erase(0,1);
     sign = (s1[0] == '-');
@@ -817,7 +817,7 @@ BigInteger log10(BigInteger n) {
     return i;
 }
 
-string BigInteger::toString(int n, int mode) {
+std::string BigInteger::toString(int n, int mode) {
     if (size == 0)
         return "0";
     std::ostringstream oss;
@@ -830,7 +830,7 @@ string BigInteger::toString(int n, int mode) {
         oss << *this;
     else {
         BigInteger temp(*this);
-        vector<int> v;
+        std::vector<int> v;
         while (temp != 0) {
             v.push_back((temp%1000).toUint());
             temp = temp/1000;
