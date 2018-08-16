@@ -18,21 +18,17 @@
 #ifndef BIGINTEGER_H
 #define BIGINTEGER_H
 
-#include<iostream>
+
 #include<string>
-#include<cstring>
-#include<cstdlib>
 #include<vector>
-#include<sstream>
-#include <climits>
+#include<iostream>
 
 typedef unsigned int digit;
 typedef unsigned long long uLong;
 
 /*TODO: 
-remove warnings
+throw class-exceptions instead of numbers
 add C++11 features
-move some public functions to private
 add comments
 make refactoring
 add unit tests
@@ -58,22 +54,29 @@ public:
     long getSize() const {return size;};
 
     BigInteger& operator=(const BigInteger&);
-    friend BigInteger abs(const BigInteger&);
+
     BigInteger operator-() const;
-    friend BigInteger operator+(const BigInteger&, const BigInteger&);
-    BigInteger operator+=(const BigInteger&);
+    BigInteger operator+() const;
+    
     BigInteger operator++();
     BigInteger operator++(int);
-    friend BigInteger operator-(const BigInteger&, const BigInteger&);
-    BigInteger operator-=(const BigInteger&);
     BigInteger operator--();
     BigInteger operator--(int);
+
+    friend BigInteger operator+(const BigInteger&, const BigInteger&);
+    friend BigInteger operator-(const BigInteger&, const BigInteger&);
     friend BigInteger operator*(const BigInteger&, const BigInteger&);
-    BigInteger operator*=(const BigInteger&);
     friend BigInteger operator/(const BigInteger&, const BigInteger&);
-    BigInteger operator/=(const BigInteger&);
     friend BigInteger operator%(const BigInteger&, const BigInteger&);
-    BigInteger operator%=(const BigInteger&); 
+    friend BigInteger operator>>(const BigInteger&, const BigInteger&);
+    friend BigInteger operator<<(const BigInteger&, const BigInteger&);
+
+    BigInteger operator+=(const BigInteger&);
+    BigInteger operator-=(const BigInteger&);
+    BigInteger operator*=(const BigInteger&);
+    BigInteger operator/=(const BigInteger&);
+    BigInteger operator%=(const BigInteger&);
+
     friend bool operator==(const BigInteger&, const BigInteger&);
     friend bool operator!=(const BigInteger&, const BigInteger&);
     friend bool operator>(const BigInteger&, const BigInteger&);
@@ -83,15 +86,16 @@ public:
 
     friend std::istream& operator>>(std::istream&, BigInteger&);
     friend std::ostream& operator<<(std::ostream&, const BigInteger&);
-    friend BigInteger operator>>(const BigInteger&, const BigInteger&);
-    friend BigInteger operator<<(const BigInteger&, const BigInteger&);
 
     friend BigInteger pow(BigInteger, BigInteger);
     friend BigInteger gcd(const BigInteger&, const BigInteger&);
     friend BigInteger lcm(const BigInteger&, const BigInteger&);
     friend BigInteger fib(const BigInteger&);
-    std::string toString(int, int);
+    friend BigInteger fact(const BigInteger&);
+    friend BigInteger abs(const BigInteger&);
+    friend BigInteger log10(BigInteger);
 
+    std::string toString(int, int);
     unsigned int toUint() const;
 private:
     std::vector<digit> num;
@@ -109,8 +113,6 @@ private:
     friend void bigAdd(const BigInteger&, const BigInteger&, BigInteger&);
     friend void bigSub(const BigInteger&, const BigInteger&, BigInteger&);
 };
-
-BigInteger log10(BigInteger);
 
 #endif
 

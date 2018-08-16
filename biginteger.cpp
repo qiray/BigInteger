@@ -1,4 +1,9 @@
 
+#include<cstring>
+#include<cstdlib>
+#include<sstream>
+#include <climits>
+
 #include "biginteger.h"
 
 std::ostream& operator<<(std::ostream& s, const BigInteger& number) {
@@ -58,7 +63,8 @@ BigInteger::BigInteger(std::string s1) {
         size = 0;
         return;
     }
-    long size2 = (size = s1.size() / Base3Log + (s1.size()%Base3Log == 0 ? 0 : 1)) + size/2 + 1;
+    size = s1.size() / Base3Log + (s1.size()%Base3Log == 0 ? 0 : 1);
+    long size2 = size + size/2 + 1;
     uLong* num1 = new uLong[size];
     for (long i = 0; i < size; i++)
         num1[i] = 0;
@@ -97,7 +103,8 @@ BigInteger::BigInteger(const char* s1) {
         size = 0;
         return;
     }
-    long size2 = (size = strlen(s1) / Base3Log + (strlen(s1)%Base3Log == 0 ? 0 : 1)) + size/2 + 1;
+    size = strlen(s1) / Base3Log + (strlen(s1)%Base3Log == 0 ? 0 : 1);
+    long size2 = size + size/2 + 1;
     uLong* num1 = new uLong[size];
     for (long i = 0; i < size; i++)
         num1[i] = 0;
@@ -138,7 +145,7 @@ BigInteger::BigInteger(long l) {
         }
         return;
     }
-    l = abs(l);
+    l = labs(l);
     long temp = l;
     while (temp != 0) {
          temp >>= BaseLog;
@@ -169,7 +176,7 @@ BigInteger::BigInteger(long long l) {
         }
         return;
     }
-    l = abs(l);
+    l = labs(l);
     long long temp = l;
     while (temp != 0) {
          temp >>= BaseLog;
@@ -285,6 +292,10 @@ BigInteger BigInteger::operator-() const {
     BigInteger temp(*this);
     temp.sign = !temp.sign;
     return temp;
+}
+
+BigInteger BigInteger::operator+() const {
+    return *this;
 }
 
 bool operator==(const BigInteger& n2, const BigInteger& n1) {
@@ -797,6 +808,16 @@ BigInteger fib(const BigInteger &n) {
         n2 = answer;
     }
     return answer;
+}
+
+BigInteger fact(const BigInteger&n) {
+    if (n.size > 1)
+        throw 8;
+    digit value = n.toUint();
+    BigInteger result(1);
+    for (int i = 2; i <= value; i++)
+        result *= i;
+    return result;
 }
 
 unsigned int BigInteger::toUint() const {
