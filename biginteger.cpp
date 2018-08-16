@@ -350,7 +350,7 @@ bool operator<= (const BigInteger& n1, const BigInteger& n2) {
     return n1 == n2 || n1 < n2;
 }
 
-bool absCompare(const BigInteger &n1, const BigInteger &n2) { //return 1 if abs(n1) > abs(n2)
+bool absCompare(const BigInteger &n1, const BigInteger &n2) { //return true if abs(n1) > abs(n2)
      if (n1.size == n2.size) {
          const digit *n10 = &n1.num[0], *n20 = &n2.num[0];
          for (long i = n1.size - 1; i >= 0; i--)
@@ -769,30 +769,18 @@ void BigInteger::fromDecimal(uLong* &A, long &size, digit &R) {   //digit *a = A
 }
 
 BigInteger gcd(const BigInteger &a, const BigInteger &b) {
-    BigInteger m(abs(a)), n(abs(b)), shift(0);
-    if (m == 0)
-        return n;
-    if (n == 0)
-        return m;
-    while (m != n) {
-        if(m.num[m.size - 1]%2 == 0 && n.num[n.size - 1]%2 == 0) {
-            m /= 2;
-            n /= 2;
-            shift++;
-        }
-        if(m.num[m.size - 1]%2 == 0 && n.num[n.size - 1]%2 != 0)
-            m /= 2;
-        if(m.num[m.size - 1]%2 != 0 && n.num[n.size - 1]%2 == 0)
-            n /= 2;
-        if(m.num[m.size - 1]%2 != 0 && n.num[n.size - 1]%2 != 0 && m > n)
-            m = (m - n)/2;
-        if(m.num[m.size - 1]%2 != 0 && n.num[n.size - 1]%2 != 0 && m < n)
-            n = (n - m)/2;
+    //The greatest common divisor
+    BigInteger m(abs(a)), n(abs(b)), temp(0);
+    while (m != 0) {
+        temp = n;
+        n = m;
+        m = temp%m;
     }
-    return m*pow(2, shift);
+    return n;
 }
 
 BigInteger lcm(const BigInteger &a, const BigInteger &b) {
+    //Least common multiple
     return abs(a*b)/gcd(a, b);
 }
 

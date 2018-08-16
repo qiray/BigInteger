@@ -31,7 +31,6 @@ throw class-exceptions instead of numbers
 add C++11 features
 add comments
 make refactoring
-add unit tests
 x86 and x64 support
 */
 
