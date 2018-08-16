@@ -54,7 +54,7 @@ BigInteger::BigInteger(std::string s1) {
         s1.erase(0,1);
     for (int i = 0; i < s1.size(); i ++)
         if (s1[i] < '0' || s1[i] > '9')
-            throw 1;
+            throw BigIntegerException("Bad characters. Can't parse std::string in BigInteger constructor", __FILE__, __LINE__);
     while(s1[0] == '0')
         s1.erase(0,1);
     if(s1.size() == 0) {
@@ -94,7 +94,7 @@ BigInteger::BigInteger(const char* s1) {
         s1++;
     for (int i = 0; i < strlen(s1); i ++)
         if (s1[i] < '0' || s1[i] > '9')
-            throw 1;
+           throw BigIntegerException("Bad characters. Can't parse char* in BigInteger constructor", __FILE__, __LINE__);
     while(s1[0] == '0')
         s1++;
     if(strlen(s1) == 0) {
@@ -597,7 +597,7 @@ void tinyDivide(const BigInteger &A, BigInteger &Q, digit s, digit &R) {
 
 BigInteger operator/ (const BigInteger &n0, const BigInteger &n1) {
     if (n1 == 0)
-        throw 3;
+        throw BigIntegerException("Division by zero", __FILE__, __LINE__);
     BigInteger R(0), Q(0);
     if ( n1.size == 1) {
           digit r;
@@ -616,7 +616,7 @@ BigInteger BigInteger::operator/= (const BigInteger &n1) {
 
 BigInteger operator% (const BigInteger &n0, const BigInteger &n1) {
     if (n1 == 0)
-        throw 4;
+        throw BigIntegerException("Modulo by zero", __FILE__, __LINE__);
     BigInteger R(0), Q(0);
     if ( n1.size == 1) {
           digit r;
@@ -633,18 +633,18 @@ BigInteger BigInteger::operator%= (const BigInteger &n1) {
 }
 
 BigInteger pow(BigInteger n1, BigInteger n2) {
-  BigInteger b(1);
-  if (n2.sign)
-      throw 6;
-  while (n2 != 0)
-     if (n2%2 == 0) {
-         n2 = n2 / 2;
-         n1 = n1*n1;
-     } else {
-         n2--;
-         b = b*n1;
-     }
-  return b;
+    BigInteger b(1);
+    if (n2.sign)
+        throw BigIntegerException("Negative power", __FILE__, __LINE__);
+    while (n2 != 0)
+        if (n2%2 == 0) {
+            n2 = n2 / 2;
+            n1 = n1*n1;
+        } else {
+            n2--;
+            b = b*n1;
+        }
+    return b;
 }
 
 void tinyMul(const BigInteger &A, digit B, BigInteger &C) {
@@ -785,7 +785,8 @@ BigInteger lcm(const BigInteger &a, const BigInteger &b) {
 }
 
 BigInteger fib(const BigInteger &n) {
-    if (n.sign) throw 7;
+    if (n.sign)
+        throw BigIntegerException("Negative Fibonacci number", __FILE__, __LINE__);
     if (n == 1 || n == 2)
         return 1;
     BigInteger n1(0), n2(1), count(n), answer(0);
@@ -800,7 +801,7 @@ BigInteger fib(const BigInteger &n) {
 
 BigInteger fact(const BigInteger&n) {
     if (n.size > 1)
-        throw 8;
+        throw BigIntegerException("Too large factorial number", __FILE__, __LINE__);
     digit value = n.toUint();
     BigInteger result(1);
     for (int i = 2; i <= value; i++)

@@ -143,8 +143,11 @@ int main() {
 
         //tostring, toUint()
         //TODO: IO test
-    } catch(...) {
-        std::cerr << "Some unhandled errors " << std::endl;
+    } catch(BigIntegerException& e) {
+        std::cerr << "Some computations exceptions: " << e.what() << std::endl;
+        errorCount += 1;
+    } catch(std::exception& e) {
+        std::cerr << "Some unhandled errors: " << e.what() << std::endl;
         errorCount += 1;
     }
     if (errorCount > 0) 

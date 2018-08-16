@@ -22,12 +22,12 @@
 #include<string>
 #include<vector>
 #include<iostream>
+#include "bigintegerexception.h"
 
 typedef unsigned int digit;
 typedef unsigned long long uLong;
 
 /*TODO: 
-throw class-exceptions instead of numbers
 add C++11 features
 add comments
 make refactoring

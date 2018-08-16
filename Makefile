@@ -12,7 +12,7 @@ all: $(LIB) tests
 $(LIB): biginteger.o
 	$(AR) rsv $(LIB) biginteger.o
 
-biginteger.o: biginteger.cpp biginteger.h
+biginteger.o: biginteger.cpp biginteger.h bigintegerexception.h
 	$(CPP) $(CFLAGS) biginteger.cpp -c
 
 tests: $(TESTS)
