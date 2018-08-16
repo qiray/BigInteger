@@ -59,7 +59,7 @@ private:
     const char* file;
     int line;
     std::string report;
-    static const bool show = true; //TODO: use define or something similar
+    static const bool show = true; //TODO: use #define or something similar
 };
 
 #endif

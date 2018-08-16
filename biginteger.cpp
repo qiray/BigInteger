@@ -17,13 +17,13 @@ std::ostream& operator<<(std::ostream& s, const BigInteger& number) {
         s << "-";
     BigInteger A(number);
     for(long i = 0; i < newLength; i++)
-        tinyDivide(A, A, Base2, newLong[i]);
+        tinyDivide(A, A, BigInteger::Base2, newLong[i]);
     while (newLong[newLength - 1] == 0)
          newLength--;
     s << newLong[newLength - 1];
     for(long i = newLength - 2; i >= 0; i--) {
-        digit temp = newLong[i], pow = Base2 / 10;
-        for (int j = 0; j < Base2Log; j++) {
+        digit temp = newLong[i], pow = BigInteger::Base2 / 10;
+        for (int j = 0; j < BigInteger::Base2Log; j++) {
             s << temp / pow;
             temp %= pow;
             pow /= 10;
@@ -136,24 +136,24 @@ BigInteger::BigInteger(long l) {
     if (l == LONG_MIN) {
         uLong temp = -l;
         while (temp != 0) {
-            temp >>= BaseLog;
+            temp >>= BigInteger::BaseLog;
             size++;
         }
         for (int i = size - 1; i >= 0; i--) {
-            num.push_back(l & BaseMod);
-            l >>= BaseLog;
+            num.push_back(l & BigInteger::BaseMod);
+            l >>= BigInteger::BaseLog;
         }
         return;
     }
     l = labs(l);
     long temp = l;
     while (temp != 0) {
-         temp >>= BaseLog;
+         temp >>= BigInteger::BaseLog;
          size++;
     }
     for (int i = size - 1; i >= 0; i--) {
-         num.push_back(l & BaseMod);
-         l >>= BaseLog;
+         num.push_back(l & BigInteger::BaseMod);
+         l >>= BigInteger::BaseLog;
     }
 }
 
@@ -167,24 +167,24 @@ BigInteger::BigInteger(long long l) {
     if (l == LLONG_MIN) {
         uLong temp = -l;
         while (temp != 0) {
-            temp >>= BaseLog;
+            temp >>= BigInteger::BaseLog;
             size++;
         }
         for (int i = size - 1; i >= 0; i--) {
-            num.push_back(l & BaseMod);
-            l >>= BaseLog;
+            num.push_back(l & BigInteger::BaseMod);
+            l >>= BigInteger::BaseLog;
         }
         return;
     }
     l = labs(l);
     long long temp = l;
     while (temp != 0) {
-         temp >>= BaseLog;
+         temp >>= BigInteger::BaseLog;
          size++;
     }
     for (int i = size - 1; i >= 0; i--) {
-         num.push_back(l & BaseMod);
-         l >>= BaseLog;
+         num.push_back(l & BigInteger::BaseMod);
+         l >>= BigInteger::BaseLog;
     }
 }
 
@@ -198,24 +198,24 @@ BigInteger::BigInteger(int l) {
     if (l == INT_MIN) {
         uLong temp = -l;
         while (temp != 0) {
-            temp >>= BaseLog;
+            temp >>= BigInteger::BaseLog;
             size++;
         }
         for (int i = size - 1; i >= 0; i--) {
-            num.push_back(l & BaseMod);
-            l >>= BaseLog;
+            num.push_back(l & BigInteger::BaseMod);
+            l >>= BigInteger::BaseLog;
         }
         return;
     }
     l = abs(l);
     int temp = l;
     while (temp != 0) {
-         temp >>= BaseLog;
+         temp >>= BigInteger::BaseLog;
          size++;
     }
     for (int i = size - 1; i >= 0; i--) {
-         num.push_back(l & BaseMod);
-         l >>= BaseLog;
+         num.push_back(l & BigInteger::BaseMod);
+         l >>= BigInteger::BaseLog;
     }
 }
 
@@ -228,12 +228,12 @@ BigInteger::BigInteger(digit l) {
     }
     digit temp = l;
     while (temp != 0) {
-         temp >>= BaseLog;
+         temp >>= BigInteger::BaseLog;
          size++;
     }
     for (int i = size - 1; i >= 0; i--) {
-         num.push_back(l & BaseMod);
-         l >>= BaseLog;
+         num.push_back(l & BigInteger::BaseMod);
+         l >>= BigInteger::BaseLog;
     }
 }
 
@@ -246,12 +246,12 @@ BigInteger::BigInteger(uLong l) {
     }
     uLong temp = l;
     while (temp != 0) {
-         temp >>= BaseLog;
+         temp >>= BigInteger::BaseLog;
          size++;
     }
     for (int i = size - 1; i >= 0; i--) {
-         num.push_back(l & BaseMod);
-         l >>= BaseLog;
+         num.push_back(l & BigInteger::BaseMod);
+         l >>= BigInteger::BaseLog;
     }
 }
 
@@ -264,12 +264,12 @@ BigInteger::BigInteger(unsigned long l) {
     }
     uLong temp = l;
     while (temp != 0) {
-         temp >>= BaseLog;
+         temp >>= BigInteger::BaseLog;
          size++;
     }
     for (int i = size - 1; i >= 0; i--) {
-         num.push_back(l & BaseMod);
-         l >>= BaseLog;
+         num.push_back(l & BigInteger::BaseMod);
+         l >>= BigInteger::BaseLog;
     }
 }
 
@@ -383,13 +383,13 @@ void bigAdd(const BigInteger &n0, const BigInteger &n1, BigInteger &returnNum) {
     if (n1.sign == n0.sign) {
         while (++i < l1) {
              carry += s1[i] + s0[++j];
-             ret[j] = carry & BaseMod;
-             carry >>= BaseLog;
+             ret[j] = carry & BigInteger::BaseMod;
+             carry >>= BigInteger::BaseLog;
         }
         while (carry && j < l0 - 1) {
              carry += s0[++j];
-             ret[j] = carry & BaseMod;
-             carry >>= BaseLog;
+             ret[j] = carry & BigInteger::BaseMod;
+             carry >>= BigInteger::BaseLog;
         }
         if (carry) {
             returnNum.size++;
@@ -398,13 +398,13 @@ void bigAdd(const BigInteger &n0, const BigInteger &n1, BigInteger &returnNum) {
     } else {
         while (++i < l1) {
              carry += (long long)s0[++j] - s1[i];
-             ret[j] = carry & BaseMod;
-             carry >>= BaseLog;
+             ret[j] = carry & BigInteger::BaseMod;
+             carry >>= BigInteger::BaseLog;
         }
         while (carry && j < l0 - 1) {
              carry += s0[++j];
-             ret[j] = carry & BaseMod;
-             carry >>= BaseLog;
+             ret[j] = carry & BigInteger::BaseMod;
+             carry >>= BigInteger::BaseLog;
         }
         returnNum.deleteLeadingZeroes();
     }
@@ -469,12 +469,12 @@ BigInteger operator* (const BigInteger &n0, const BigInteger &n1) {
          return tinyMul1(n0, m);
      }
      BigInteger res(0);
-     if(n0Size >= KaratsubaMin || n1Size >= KaratsubaMin) {
-         if(n0Size >= n1Size && n1Size >= KaratsubaMin/2) {
+     if(n0Size >= BigInteger::KaratsubaMin || n1Size >= BigInteger::KaratsubaMin) {
+         if(n0Size >= n1Size && n1Size >= BigInteger::KaratsubaMin/2) {
               KaratsubaMul(n0, n1, res);
               return res;
          }
-         if(n1Size >= n0Size && n0Size >= KaratsubaMin/2) {
+         if(n1Size >= n0Size && n0Size >= BigInteger::KaratsubaMin/2) {
              KaratsubaMul(n1, n0, res);
              return res;
          }
@@ -491,8 +491,8 @@ BigInteger operator* (const BigInteger &n0, const BigInteger &n1) {
          carry = 0;
          for (j = 0; j < n1Size; j++) {
              temp = (uLong)s0[i] * s1[j] + rslt[i+j] + carry;
-             carry = temp >> BaseLog;
-             rslt[i+j] = temp & BaseMod;//temp%BASE;
+             carry = temp >> BigInteger::BaseLog;
+             rslt[i+j] = temp & BigInteger::BaseMod;//temp%BASE;
          }
          rslt[i+j] = carry;
      }
@@ -514,7 +514,7 @@ void bigDivide(const BigInteger &n0, const BigInteger &n1, BigInteger &Q, BigInt
     }
     BigInteger U(abs(n0)), B1(abs(n1));
     long n = B1.size, l0 = U.size;
-    digit scale = BASE / (n1.num[n1.size - 1] + 1), r;
+    digit scale = BigInteger::BASE / (n1.num[n1.size - 1] + 1), r;
     long long qGuess, borrow, carry;
     if (scale > 1) {
         tinyMul(U, scale, U);//U *= scale;
@@ -534,12 +534,12 @@ void bigDivide(const BigInteger &n0, const BigInteger &n1, BigInteger &Q, BigInt
     long long temp1, temp2;
     long i;
     for(long j = 0; j > -m; j--) {
-        qGuess = (((uLong)u[j] << BaseLog) + u[j - 1]) / b[0];
-        r = (((uLong)u[j] << BaseLog) + u[j - 1]) % b[0];
-        while ( r < BASE) {
+        qGuess = (((uLong)u[j] << BigInteger::BaseLog) + u[j - 1]) / b[0];
+        r = (((uLong)u[j] << BigInteger::BaseLog) + u[j - 1]) % b[0];
+        while ( r < BigInteger::BASE) {
             temp2 = b[-1]*qGuess;
-            temp1 = ((uLong)r << BaseLog) + u[j - 2];
-            if ( temp2 > temp1 || qGuess == BASE ) {
+            temp1 = ((uLong)r << BigInteger::BaseLog) + u[j - 2];
+            if ( temp2 > temp1 || qGuess == BigInteger::BASE ) {
                 qGuess--;
                 r += b[0];
             } else break;
@@ -548,24 +548,24 @@ void bigDivide(const BigInteger &n0, const BigInteger &n1, BigInteger &Q, BigInt
         carry = borrow = 0;
         for (i = n - 1; i >= 0; i--) {
             temp1 = b[-i] * qGuess + carry;
-            carry = temp1 >> BaseLog;
-            temp1 &= BaseMod;
+            carry = temp1 >> BigInteger::BaseLog;
+            temp1 &= BigInteger::BaseMod;
             temp2 = shift[-i - 1] - temp1 + borrow;
-            shift[-i - 1] = temp2 & BaseMod;
-            borrow = temp2 >> BaseLog;
+            shift[-i - 1] = temp2 & BigInteger::BaseMod;
+            borrow = temp2 >> BigInteger::BaseLog;
         }
         temp2 = shift[-i - 1] - carry + borrow;
-        shift[-i - 1] = temp2 & BaseMod;
-        borrow = temp2 >> BaseLog;
+        shift[-i - 1] = temp2 & BigInteger::BaseMod;
+        borrow = temp2 >> BigInteger::BaseLog;
         q[j] += qGuess + borrow;
         if (borrow != 0) {
             carry = 0;
             for (i = n - 1; i >= 0; i--) {
                 temp2 = shift[-i - 1] + b[-i] + carry;
-                shift[-i - 1] = temp2 & BaseMod;
-                carry = temp2 >> BaseLog;
+                shift[-i - 1] = temp2 & BigInteger::BaseMod;
+                carry = temp2 >> BigInteger::BaseLog;
             }
-            shift[-i - 1] = (shift[-i - 1] + carry) & BaseMod;
+            shift[-i - 1] = (shift[-i - 1] + carry) & BigInteger::BaseMod;
         }
     }
     Q.deleteLeadingZeroes();
@@ -587,7 +587,7 @@ void tinyDivide(const BigInteger &A, BigInteger &Q, digit s, digit &R) {
     digit *q = &Q.num[0];
     R = 0;
     for(long i = A.size - 1; i >= 0; i--) {
-        uLong temp = a[i] + ((uLong)R << BaseLog);
+        uLong temp = a[i] + ((uLong)R << BigInteger::BaseLog);
         q[i] = temp/s;
         R = temp - q[i]*s;
     }
@@ -658,8 +658,8 @@ void tinyMul(const BigInteger &A, digit B, BigInteger &C) {
     uLong temp = 0, carry = 0;
     for(long i = 0; i < A.size; i++) {
         temp = (uLong)a[i]*B + carry;
-        carry = temp >> BaseLog;
-        c[i] = temp & BaseMod;//temp - carry*BASE;
+        carry = temp >> BigInteger::BaseLog;
+        c[i] = temp & BigInteger::BaseMod;//temp - carry*BigInteger::BASE;
     }
     if(carry) {
          C.size++;
@@ -684,20 +684,20 @@ void KaratsubaMul(const BigInteger &A, const BigInteger &B, BigInteger &C) {//A.
     a1.size = A.size/2;
     a2.size = (A.size + 1)/2;
     a1.num.resize(a1.size);
-    memcpy(&a1.num[0], &A.num[A.size - a1.size], a1.size*sizeOfDigit);
+    memcpy(&a1.num[0], &A.num[A.size - a1.size], a1.size*BigInteger::sizeOfDigit);
     a2.num.resize(a2.size);
-    memcpy(&a2.num[0], &A.num[0], a2.size*sizeOfDigit);
+    memcpy(&a2.num[0], &A.num[0], a2.size*BigInteger::sizeOfDigit);
     if (B.size <= a2.size) {
         b2.size = B.size;
         b2.num.resize(b2.size);
-        memcpy(&b2.num[0], &B.num[0], b2.size*sizeOfDigit);
+        memcpy(&b2.num[0], &B.num[0], b2.size*BigInteger::sizeOfDigit);
     } else {
         b2.size = a2.size;
         b1.size = B.size - b2.size;
         b1.num.resize(b1.size);
-        memcpy(&b1.num[0], &B.num[B.size - b1.size], b1.size*sizeOfDigit);
+        memcpy(&b1.num[0], &B.num[B.size - b1.size], b1.size*BigInteger::sizeOfDigit);
         b2.num.resize(b2.size);
-        memcpy(&b2.num[0], &B.num[0], b2.size*sizeOfDigit);
+        memcpy(&b2.num[0], &B.num[0], b2.size*BigInteger::sizeOfDigit);
     }
     long a2Size = a2.size, tSize = a1.size + b1.size;;
     a1.deleteLeadingZeroes();
@@ -705,20 +705,20 @@ void KaratsubaMul(const BigInteger &A, const BigInteger &B, BigInteger &C) {//A.
     b1.deleteLeadingZeroes();
     b2.deleteLeadingZeroes();
     BigInteger temp2 = a2*b2, temp3 = a1*b1, temp1 = (a1 + a2)*(b1 + b2) - temp2 - temp3;
-    memcpy(c, &temp2.num[0], temp2.size*sizeOfDigit);
-    memcpy(c + 2*a2Size, &temp3.num[0], temp3.size*sizeOfDigit);
+    memcpy(c, &temp2.num[0], temp2.size*BigInteger::sizeOfDigit);
+    memcpy(c + 2*a2Size, &temp3.num[0], temp3.size*BigInteger::sizeOfDigit);
     digit *ptr = c + a2Size, *tmp = &temp1.num[0], *cEnd = c + C.size;
     uLong carry = 0;
     for(long i = 0; i < temp1.size; i++) {
         carry += tmp[i] + *ptr;
-        *ptr++ = carry & BaseMod;
-        carry >>= BaseLog;
+        *ptr++ = carry & BigInteger::BaseMod;
+        carry >>= BigInteger::BaseLog;
     }
     if (carry) {
         while (ptr < cEnd) {
             carry += *ptr;
-            *ptr++ = carry & BaseMod;
-            carry >>= BaseLog;
+            *ptr++ = carry & BigInteger::BaseMod;
+            carry >>= BigInteger::BaseLog;
         }
         if (carry) {
             C.size++;
@@ -752,8 +752,8 @@ void BigInteger::fromDecimal(uLong* &A, long &size, digit &R) {   //digit *a = A
         temp = temp2 + A[i];
         if (temp < min(A[i], temp2))
             tmp++;
-        A[i] = (tmp << 33) + (temp >> BaseLog);
-        R = temp & BaseMod;
+        A[i] = (tmp << 33) + (temp >> BigInteger::BaseLog);
+        R = temp & BigInteger::BaseMod;
     }
     long i = 0;
     while (A[i] == 0 && size > 0) {
@@ -762,7 +762,7 @@ void BigInteger::fromDecimal(uLong* &A, long &size, digit &R) {   //digit *a = A
     }
     if (i > 0) {
         uLong *tmp = new uLong[size];
-        memcpy(tmp, A + i, size*sizeOfuLong);
+        memcpy(tmp, A + i, size*BigInteger::sizeOfuLong);
         delete [] A;
         A = tmp;
     }
@@ -815,7 +815,7 @@ unsigned int BigInteger::toUint() const {
     if (size == 1)
         return num[0];
     else
-        return num[1]*BASE + num[0];
+        return num[1]*BigInteger::BASE + num[0];
 }
 
 BigInteger log10(BigInteger n) {

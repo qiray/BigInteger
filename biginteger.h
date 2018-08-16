@@ -34,10 +34,6 @@ make refactoring
 x86 and x64 support
 */
 
-const digit Base2 = 1000000000U, BASE = 2147483648U, BaseMod = BASE - 1, BaseLog = 31, KaratsubaMin = 80, Base2Log = 9, Base3Log = Base2Log + 1;
-const uLong Base3 = (uLong)Base2*10;
-const int sizeOfDigit = sizeof(digit), sizeOfuLong = sizeof(uLong);
-
 class BigInteger {
 public:
     BigInteger();
@@ -102,6 +98,10 @@ private:
     bool sign;
     void fromDecimal(uLong*&, long&, digit&);
     void deleteLeadingZeroes();
+
+    static const int sizeOfDigit = sizeof(digit), sizeOfuLong = sizeof(uLong);
+    static const digit Base2 = 1000000000U, BASE = 2147483648U, BaseMod = BASE - 1, BaseLog = 31, KaratsubaMin = 80, Base2Log = 9, Base3Log = Base2Log + 1;
+    static const uLong Base3 = (uLong)Base2*10;
 
     friend bool absCompare(const BigInteger&, const BigInteger&);
     friend void bigDivide(const BigInteger&, const BigInteger&, BigInteger&, BigInteger&);
