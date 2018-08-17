@@ -50,6 +50,15 @@ BigInteger::BigInteger() {
     num.push_back(0);
 }
 
+// #if __cplusplus > 201100
+//     BigInteger::BigInteger(BigInteger&& value) {
+//         //TODO: write
+//     }
+//     BigInteger& BigInteger::operator=(const BigInteger&& value) {
+//         return *this;
+//     }
+// #endif
+
 void BigInteger::constructFromString(const char* s1) {
     while(s1[0] == ' ' || s1[0] == '\t')
         s1++;

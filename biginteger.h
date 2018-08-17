@@ -46,6 +46,11 @@ public:
     BigInteger(uLong);
     BigInteger(unsigned long);
 
+// #if __cplusplus > 201100
+//     BigInteger(BigInteger&&);
+//     BigInteger& operator=(const BigInteger&&);
+// #endif
+
     long getSize() const {return size;};
 
     BigInteger& operator=(const BigInteger&);
