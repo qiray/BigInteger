@@ -100,7 +100,8 @@ private:
     void deleteLeadingZeroes();
 
     static const int sizeOfDigit = sizeof(digit), sizeOfuLong = sizeof(uLong);
-    static const digit Base2 = 1000000000U, BASE = 2147483648U, BaseMod = BASE - 1, BaseLog = 31, KaratsubaMin = 80, Base2Log = 9, Base3Log = Base2Log + 1;
+    static const digit Base2 = 1000000000U, BASE = 2147483648U, BaseMod = BASE - 1, BaseLog = 31;
+    static const digit KaratsubaMin = 80, Base2Log = 9, Base3Log = Base2Log + 1;
     static const uLong Base3 = (uLong)Base2*10;
 
     friend bool absCompare(const BigInteger&, const BigInteger&);
@@ -111,6 +112,15 @@ private:
     friend BigInteger tinyMul1(const BigInteger&, digit);
     friend void bigAdd(const BigInteger&, const BigInteger&, BigInteger&);
     friend void bigSub(const BigInteger&, const BigInteger&, BigInteger&);
+    friend BigInteger smallMul(const BigInteger&, const BigInteger&);
+    friend BigInteger largeMul(const BigInteger&, const BigInteger&);
+
+    void constructFromString(const char*);
+    template<class T>
+    void constructFromSigned(T min_value, T value, T (*abs_func)(T));
+
+    template<class T>
+    void constructFromUnsigned(T value);
 };
 
 #endif

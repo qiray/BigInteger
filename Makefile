@@ -1,4 +1,4 @@
-CFLAGS = -g
+CFLAGS = -g -std=c++03 -Wall
 
 CPP=g++
 AR=ar

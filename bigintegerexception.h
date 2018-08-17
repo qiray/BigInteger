@@ -54,10 +54,12 @@ public:
     const char* Message() const throw() {
         return message;
     }
+    //Destructor needed for C++03 standard
+    ~BigIntegerException() throw() {};
 private:
-    const char* message;
     const char* file;
     int line;
+    const char* message;
     std::string report;
     static const bool show = true; //TODO: use #define or something similar
 };
