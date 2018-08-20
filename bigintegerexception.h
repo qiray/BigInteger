@@ -61,7 +61,11 @@ private:
     int line;
     const char* message;
     std::string report;
-    static const bool show = true; //TODO: use #define or something similar
+    #ifdef DEBUG_EXCEPTIONS
+        static const bool show = true;
+    #else
+         static const bool show = false;
+    #endif
 };
 
 #endif

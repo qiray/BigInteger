@@ -1,9 +1,15 @@
-CFLAGS = -g -std=c++03 -Wall
+CFLAGS = -O3 -Wall
 
 CPP=g++
 AR=ar
 LIB=libbiginteger.a
 TESTS=tests.out
+
+ifeq ($(DEBUG),true) 
+LOG_EXCEPTIONS=-DDEBUG_EXCEPTIONS
+else
+LOG_EXCEPTIONS=
+endif
 
 .PHONY: all tests clean
 
@@ -12,8 +18,8 @@ all: $(LIB) tests
 $(LIB): biginteger.o
 	$(AR) rsv $(LIB) biginteger.o
 
-biginteger.o: biginteger.cpp biginteger.h bigintegerexception.h
-	$(CPP) $(CFLAGS) biginteger.cpp -c
+biginteger.o: biginteger.cpp *.h
+	$(CPP) $(LOG_EXCEPTIONS) $(CFLAGS) biginteger.cpp -c 
 
 tests: $(TESTS)
 

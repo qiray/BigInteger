@@ -22,17 +22,12 @@
 #include<string>
 #include<vector>
 #include<iostream>
+#include <climits>
 #include "bigintegerexception.h"
+#include "bigintegerversion.h"
 
 typedef unsigned int digit;
 typedef unsigned long long uLong;
-
-/*TODO: 
-add C++11 features
-add comments
-make refactoring
-x86 and x64 support
-*/
 
 class BigInteger {
 public:
@@ -46,10 +41,11 @@ public:
     BigInteger(uLong);
     BigInteger(unsigned long);
 
-// #if __cplusplus > 201100
-//     BigInteger(BigInteger&&);
-//     BigInteger& operator=(const BigInteger&&);
-// #endif
+#if __cplusplus > 201100
+    BigInteger(const BigInteger&);
+    BigInteger(BigInteger&&);
+    BigInteger& operator=(BigInteger&&);
+#endif
 
     long getSize() const {return size;};
 
@@ -105,8 +101,14 @@ private:
     void deleteLeadingZeroes();
 
     static const int sizeOfDigit = sizeof(digit), sizeOfuLong = sizeof(uLong);
+#if UINT_MAX >= 2147483648U
     static const digit Base2 = 1000000000U, BASE = 2147483648U, BaseMod = BASE - 1, BaseLog = 31;
-    static const digit KaratsubaMin = 80, Base2Log = 9, Base3Log = Base2Log + 1;
+    static const digit Base2Log = 9, Base3Log = Base2Log + 1;
+#else //support platforms with small climits
+    static const digit Base2 = 10000, BASE = 32768, BaseMod = BASE - 1, BaseLog = 15;
+    static const digit Base2Log = 4, Base3Log = Base2Log + 1;
+#endif
+    static const digit KaratsubaMin = 80; 
     static const uLong Base3 = (uLong)Base2*10;
 
     friend bool absCompare(const BigInteger&, const BigInteger&);

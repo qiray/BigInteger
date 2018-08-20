@@ -2,7 +2,6 @@
 #include<cstring>
 #include<cstdlib>
 #include<sstream>
-#include <climits>
 
 #include "biginteger.h"
 
@@ -50,14 +49,26 @@ BigInteger::BigInteger() {
     num.push_back(0);
 }
 
-// #if __cplusplus > 201100
-//     BigInteger::BigInteger(BigInteger&& value) {
-//         //TODO: write
-//     }
-//     BigInteger& BigInteger::operator=(const BigInteger&& value) {
-//         return *this;
-//     }
-// #endif
+#if __cplusplus > 201100
+    BigInteger::BigInteger(const BigInteger &value) {
+        this->num = value.num;
+        this->size = value.size;
+        this->sign = value.sign;
+    }
+
+    BigInteger::BigInteger(BigInteger&& value) {
+        this->num = std::move(value.num);
+        this->size = value.size;
+        this->sign = value.sign;
+    }
+
+    BigInteger& BigInteger::operator=(BigInteger&& value) {
+        this->num = std::move(value.num);
+        this->size = value.size;
+        this->sign = value.sign;
+        return *this;
+    }
+#endif
 
 void BigInteger::constructFromString(const char* s1) {
     while(s1[0] == ' ' || s1[0] == '\t')
