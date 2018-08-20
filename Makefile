@@ -1,30 +1,42 @@
 CFLAGS = -O3 -Wall
 
-CPP=g++
-AR=ar
-LIB=libbiginteger.a
-TESTS=tests.out
-
-ifeq ($(DEBUG),true) 
-LOG_EXCEPTIONS=-DDEBUG_EXCEPTIONS
+ifeq ($(OS),win)
+	CXX=i686-w64-mingw32-g++ 
+	LIB=$(LIB_WIN)
+	TESTS=tests.exe
 else
-LOG_EXCEPTIONS=
+	LIB=$(LIB_NIX)
+	TESTS=tests.out
+endif
+
+LIB_NIX=libbiginteger.a
+LIB_WIN=biginteger.dll
+
+ifeq ($(NO_DEBUG),true)
+	LOG_EXCEPTIONS=
+else
+	LOG_EXCEPTIONS=-DDEBUG_EXCEPTIONS
 endif
 
 .PHONY: all tests clean
 
 all: $(LIB) tests
 
-$(LIB): biginteger.o
+$(LIB_NIX): biginteger.o
 	$(AR) rsv $(LIB) biginteger.o
 
+$(LIB_WIN): biginteger.o
+	$(CXX) -o $(LIB_WIN) -s -shared biginteger.o -Wl,--subsystem,windows
+
 biginteger.o: biginteger.cpp *.h
-	$(CPP) $(LOG_EXCEPTIONS) $(CFLAGS) biginteger.cpp -c 
+	$(CXX) $(LOG_EXCEPTIONS) $(CFLAGS) biginteger.cpp -c 
 
 tests: $(TESTS)
 
+notest: $(LIB) 
+
 $(TESTS): $(LIB) tests.cpp
-	$(CPP) $(CFLAGS) tests.cpp -lbiginteger -L. -o $(TESTS)
+	$(CXX) $(CFLAGS) tests.cpp -lbiginteger -L. -o $(TESTS)
 
 clean:
-	rm -f *.o *.a *.exe *.out
+	rm -f *.o *.a *.exe *.out *.dll
