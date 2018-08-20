@@ -25,6 +25,7 @@ This library provides BigInteger class with simple interface - BigInteger can be
 
 ```c++
 #include <iostream>
+#include <biginteger.h>
 
 int main() {
     BigInteger a(1000), b("340282366920938463463374607431768211456");
@@ -32,8 +33,8 @@ int main() {
     std::cout << a + b << std::endl;
     std::cout << c - b << std::endl;
     std::cout << a * b << std::endl;
-    std::cout << a / b << std::endl;
-    std::cout << a % b << std::endl;
+    std::cout << b / a << std::endl;
+    std::cout << b % a << std::endl;
     return 0;
 }
 ```
