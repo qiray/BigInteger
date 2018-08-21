@@ -46,7 +46,7 @@ For more information see [tests.cpp](https://github.com/qiray/BigInteger/blob/ma
 
 ## Testing
 
-To compile and the tests, you need to execute
+To compile the tests, you need to execute
 
 ```
 make tests
