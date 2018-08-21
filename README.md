@@ -9,8 +9,11 @@ make
 ```
 
 There are some extra flags and arguments:
+
     notest - build library only (without tests)
+    
     OS=win - build for Windows
+    
     NO_DEBUG=true - disable exceptions log
 
 For example to build library for Windows with tests and without exceptions' logging:
