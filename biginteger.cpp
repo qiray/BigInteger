@@ -139,7 +139,7 @@ void BigInteger::constructFromSigned(T min_value, T value, T (*abs_func)(T)) {
         return;
     }
     value = abs_func(value);
-    long temp = value;
+    T temp = value;
     while (temp != 0) {
         temp >>= BigInteger::BaseLog;
         size++;

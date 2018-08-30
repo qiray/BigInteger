@@ -9,6 +9,10 @@ else
 	TESTS=tests.out
 endif
 
+ifeq ($(PLATFORM), x86)
+	CFLAGS += -m32
+endif
+
 LIB_NIX=libbiginteger.a
 LIB_WIN=biginteger.dll
 

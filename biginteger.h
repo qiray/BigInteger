@@ -108,7 +108,7 @@ private:
     static const digit Base2 = 10000, BASE = 32768, BaseMod = BASE - 1, BaseLog = 15;
     static const digit Base2Log = 4, Base3Log = Base2Log + 1;
 #endif
-    static const digit KaratsubaMin = 80; 
+    static const long KaratsubaMin = 80;
     static const uLong Base3 = (uLong)Base2*10;
 
     friend bool absCompare(const BigInteger&, const BigInteger&);
