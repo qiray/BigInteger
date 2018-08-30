@@ -517,7 +517,7 @@ void tinyDivide(const BigInteger &A, BigInteger &Q, digit s, digit &R) {
         R = temp - q[i]*s;
     }
     Q.deleteLeadingZeroes();
-    Q.sign = A.sign ^ (s < 0);
+    Q.sign = A.sign;
 }
 
 BigInteger operator/(const BigInteger &n0, const BigInteger &n1) {
@@ -590,7 +590,7 @@ void tinyMul(const BigInteger &A, digit B, BigInteger &C) {
          C.size++;
          C.num.push_back(carry);
     }
-    C.sign = A.sign ^ (B < 0);
+    C.sign = A.sign;
 }
 
 BigInteger tinyMul1(const BigInteger &A, digit B) {
@@ -802,4 +802,30 @@ BigInteger operator<<(const BigInteger &n1, const BigInteger &n2) {
     if (n2 > 0)
         return n1*pow(2, abs(n2));
     return n1/pow(2, abs(n2));
+}
+
+BigIntegerVersionInfo& BigIntegerVersionInfo::Instance() {
+    static BigIntegerVersionInfo s;
+    return s;
+}
+int BigIntegerVersionInfo::getMajor() {
+    return major;
+}
+int BigIntegerVersionInfo::getMinor() {
+    return minor;
+}
+int BigIntegerVersionInfo::getBuild() {
+    return build;
+}
+std::string BigIntegerVersionInfo::getCompleteInfo() {
+    std::ostringstream s;
+    s << "BigInteger library version " << major << "." << minor << "." << build << ".\n";
+    #ifdef BUILD
+        s << "Target " << BUILD << std::endl;
+    #endif
+    s << "Build at " << __DATE__ << " " << __TIME__ << std::endl << std::endl;
+    return s.str();
+}
+void BigIntegerVersionInfo::printCompleteInfo() {
+    std::cout << getCompleteInfo();
 }
