@@ -16,6 +16,10 @@ There are some extra flags and arguments:
     
     NO_DEBUG=true - disable exceptions log
 
+    PLATFORM=x86 - build 32-bit version
+
+    STD=c++03 - Use C++03 standard
+
 For example to build library for Windows with tests and without exceptions' logging:
 
 ```bash
@@ -41,6 +45,10 @@ int main() {
     return 0;
 }
 ```
+
+## Linkinig
+
+<!-- TODO: write -->
 
 For more information see [tests.cpp](https://github.com/qiray/BigInteger/blob/master/tests.cpp) file.
 
