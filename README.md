@@ -8,6 +8,8 @@ For building library run
 make
 ```
 
+This command will create Release folder with library and headers.
+
 There are some extra flags and arguments:
 
     notest - build library only (without tests)
@@ -19,6 +21,10 @@ There are some extra flags and arguments:
     PLATFORM=x86 - build 32-bit version
 
     STD=c++03 - Use C++03 standard
+
+    clean - clean current build
+
+    allclean - clean current build and release folder
 
 For example to build library for Windows with tests and without exceptions' logging:
 
@@ -46,11 +52,13 @@ int main() {
 }
 ```
 
+For more information see [tests.cpp](https://github.com/qiray/BigInteger/blob/master/tests.cpp) file.
+
 ## Linkinig
 
-<!-- TODO: write -->
+You should link BigInteger library to your project to make it work.
 
-For more information see [tests.cpp](https://github.com/qiray/BigInteger/blob/master/tests.cpp) file.
+<!-- TODO: write -->
 
 ## Testing
 

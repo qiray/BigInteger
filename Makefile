@@ -18,6 +18,9 @@ endif
 
 ifeq ($(STD), c++03)
 	CFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++03
+	RELEASE_PATH=Release/old
+else
+	RELEASE_PATH=Release/new
 endif
 
 LIB_NIX=libbiginteger-$(BUILD).a
@@ -32,6 +35,9 @@ endif
 .PHONY: all tests clean
 
 all: $(LIB) tests
+	mkdir -p $(RELEASE_PATH)
+	cp $(LIB) $(RELEASE_PATH)/$(LIB)
+	cp *.h $(RELEASE_PATH)/
 
 $(LIB_NIX): biginteger.o
 	$(AR) rsv $(LIB) biginteger.o
@@ -51,3 +57,6 @@ $(TESTS): $(LIB) tests.cpp
 
 clean:
 	rm -f *.o *.a *.exe *.out *.dll
+
+allclean: clean
+	rm -rf Release/*

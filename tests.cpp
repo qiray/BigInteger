@@ -17,7 +17,7 @@ int main() {
         BigInteger a(1), b(2), c(3), num;
         BigInteger a1("1"), fromString("21474836471234567890"), fromStdString(std::string("21474836471234567890"));
         BigInteger fromString1("-21474836471234567890"), fromStdString1(std::string("-21474836471234567890"));
-        BigInteger fromLong(-2147483648l), fromLongLong(2147483648ll), fromUnsignedLong(2147483648ul);
+        BigInteger fromLong(-2147483647l), fromLongLong(2147483648ll), fromUnsignedLong(2147483648ul);
         BigInteger fromString2("2147483648");
 
         test(a == a1, "1st equality test failed");
@@ -69,13 +69,13 @@ int main() {
         test(num + fromString1 == fromStdString1, "Sum test failed");
         test(num + num == num, "Sum test failed");
         test(fromString + fromStdString == "42949672942469135780", "Sum test failed");
-        test(fromString + fromLong + fromStdString + fromLongLong == "42949672942469135780", "Sum test failed");
+        test(fromString + fromLong + fromStdString + fromLongLong == "42949672942469135781", "Sum test failed");
 
         test(c - a == b, "Sub test failed");
         test(c - num == c, "Sub test failed");
         test(fromStdString1 - fromStdString1 == num, "Sub test failed");
         test(fromUnsignedLong - fromLongLong == num, "Sub test failed");
-        test(fromString2 - fromLong == "4294967296", "Sub test failed");
+        test(fromString2 - fromLong == "4294967295", "Sub test failed");
 
         test(fromStdString * a == fromStdString, "Mul test failed");
         test(fromStdString * num == num, "Mul test failed");
