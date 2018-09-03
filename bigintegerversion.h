@@ -1,9 +1,7 @@
 #ifndef BIGINTEGER_VERSION_HEADER
 #define BIGINTEGER_VERSION_HEADER
 
-#include <iostream>
 #include <string>
-#include <sstream>
 
 //Singleton for version info
 class BigIntegerVersionInfo {

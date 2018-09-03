@@ -56,9 +56,7 @@ For more information see [tests.cpp](https://github.com/qiray/BigInteger/blob/ma
 
 ## Linkinig
 
-You should link BigInteger library to your project to make it work.
-
-<!-- TODO: write -->
+You should link BigInteger library to your project to make it work. Please read docs for your IDE or compiler.
 
 ## Testing
 

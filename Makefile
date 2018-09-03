@@ -12,6 +12,7 @@ ifeq ($(OS),win)
 	LIB=$(LIB_WIN)
 	TESTS=tests.exe
 else
+	OS=linux
 	LIB=$(LIB_NIX)
 	TESTS=tests.out
 endif
@@ -32,21 +33,31 @@ ifneq ($(NO_DEBUG),true)
 	CMD_MACROS += -DDEBUG_EXCEPTIONS
 endif
 
-.PHONY: all tests clean
+ARCHIVE_NAME=$(OS)-$(BUILD).zip
+
+.PHONY: all tests clean release
 
 all: $(LIB) tests
 	mkdir -p $(RELEASE_PATH)
 	cp $(LIB) $(RELEASE_PATH)/$(LIB)
 	cp *.h $(RELEASE_PATH)/
 
-$(LIB_NIX): biginteger.o
-	$(AR) rsv $(LIB) biginteger.o
+release: all
+	cd $(RELEASE_PATH); \
+	rm -f $(ARCHIVE_NAME); \
+	zip $(ARCHIVE_NAME) *.h $(LIB)
 
-$(LIB_WIN): biginteger.o
-	$(CXX) -o $(LIB_WIN) -s -shared biginteger.o -Wl,--subsystem,windows
+LIB_CPP=biginteger.cpp bigintegerversion.cpp
+LIB_OBJ=$(patsubst %.cpp,%.o,$(wildcard $(LIB_CPP)))
 
-biginteger.o: biginteger.cpp *.h
-	$(CXX) $(CMD_MACROS) $(CFLAGS) biginteger.cpp -c
+$(LIB_NIX): $(LIB_OBJ)
+	$(AR) rsv $(LIB) $(LIB_OBJ)
+
+$(LIB_WIN): $(LIB_OBJ)
+	$(CXX) -o $(LIB_WIN) -s -shared $(LIB_OBJ) -Wl,--subsystem,windows
+
+.cpp.o: #convert cpp files to objects
+	$(CXX) -c $(CMD_MACROS) $(CFLAGS) $< -o $@
 
 tests: $(TESTS)
 
@@ -56,7 +67,7 @@ $(TESTS): $(LIB) tests.cpp
 	$(CXX) $(CFLAGS) tests.cpp -lbiginteger-$(BUILD) -L. -o $(TESTS)
 
 clean:
-	rm -f *.o *.a *.exe *.out *.dll
+	rm -f *.o *.gch *.a *.exe *.out *.dll
 
 allclean: clean
 	rm -rf Release/*
