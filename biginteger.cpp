@@ -1,7 +1,7 @@
 
-#include<cstring>
-#include<cstdlib>
-#include<sstream>
+#include <cstring>
+#include <cstdlib>
+#include <sstream>
 
 #include "biginteger.h"
 

@@ -19,9 +19,9 @@
 #define BIGINTEGER_H
 
 
-#include<string>
-#include<vector>
-#include<iostream>
+#include <string>
+#include <vector>
+#include <iostream>
 #include <climits>
 #include "bigintegerexception.h"
 #include "bigintegerversion.h"
