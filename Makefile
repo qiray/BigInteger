@@ -12,7 +12,7 @@ ifeq ($(OS),win)
 	LIB=$(LIB_WIN)
 	TESTS=tests.exe
 else
-	OS=linux
+	OS = $(shell bash check_os.sh)
 	LIB=$(LIB_NIX)
 	TESTS=tests.out
 endif
