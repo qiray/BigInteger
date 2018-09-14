@@ -32,6 +32,12 @@ For example to build library for Windows with tests and without exceptions' logg
 make OS=win NO_DEBUG=true
 ```
 
+You can also build all possible libraries for current OS and Windows by
+
+```bash
+bash build_all.sh
+```
+
 ## Usage
 
 This library provides BigInteger class with simple interface - BigInteger can be used as standard integer types:
