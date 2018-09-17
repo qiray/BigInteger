@@ -19,9 +19,9 @@ endif
 
 ifeq ($(STD), c++03)
 	CFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++03
-	RELEASE_PATH=Release/old
+	RELEASE_PATH=Release/std03
 else
-	RELEASE_PATH=Release/new
+	RELEASE_PATH=Release/std11
 endif
 
 LIB_NIX=libbiginteger-$(BUILD).a
@@ -54,7 +54,7 @@ $(LIB_NIX): $(LIB_OBJ)
 	$(AR) rsv $(LIB) $(LIB_OBJ)
 
 $(LIB_WIN): $(LIB_OBJ)
-	$(CXX) -o $(LIB_WIN) -s -shared $(LIB_OBJ) -Wl,--subsystem,windows
+	$(CXX) -shared -o $(LIB_WIN) $(LIB_OBJ) -Wl,--out-implib,$(LIB_NIX)
 
 .cpp.o: #convert cpp files to objects
 	$(CXX) -c $(CMD_MACROS) $(CFLAGS) $< -o $@
