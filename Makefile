@@ -8,24 +8,23 @@ else
 endif
 
 ifeq ($(OS),win)
-	CXX=i686-w64-mingw32-g++ 
-	LIB=$(LIB_WIN)
+	CXX=i686-w64-mingw32-g++
 	TESTS=tests.exe
+	RELEASE_PATH=Release/win
 else
 	OS = $(shell bash check_os.sh)
-	LIB=$(LIB_NIX)
 	TESTS=tests.out
+	RELEASE_PATH=Release/$(OS)
 endif
 
 ifeq ($(STD), c++03)
 	CFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++03
-	RELEASE_PATH=Release/std03
+	RELEASE_PATH:=$(RELEASE_PATH)/std03
 else
-	RELEASE_PATH=Release/std11
+	RELEASE_PATH:=$(RELEASE_PATH)/std11
 endif
 
-LIB_NIX=libbiginteger-$(BUILD).a
-LIB_WIN=biginteger-$(BUILD).dll
+LIB=libbiginteger-$(BUILD).a
 
 CMD_MACROS= -DBUILD='"$(BUILD)"'
 
@@ -50,11 +49,8 @@ release: all
 LIB_CPP=biginteger.cpp bigintegerversion.cpp
 LIB_OBJ=$(patsubst %.cpp,%.o,$(wildcard $(LIB_CPP)))
 
-$(LIB_NIX): $(LIB_OBJ)
+$(LIB): $(LIB_OBJ)
 	$(AR) rsv $(LIB) $(LIB_OBJ)
-
-$(LIB_WIN): $(LIB_OBJ)
-	$(CXX) -shared -o $(LIB_WIN) $(LIB_OBJ) -Wl,--out-implib,$(LIB_NIX)
 
 .cpp.o: #convert cpp files to objects
 	$(CXX) -c $(CMD_MACROS) $(CFLAGS) $< -o $@

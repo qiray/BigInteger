@@ -1,6 +1,22 @@
 # BigInteger
 Arbitrary-precision integer library in C++
 
+## Dependencies
+
+For build this library you need:
+
+- C++ compiler with C++11 or C++03 support;
+
+- C++ standard headers;
+
+- Compiler -m32 flag support to create 32-bit version;
+
+- ar;
+
+- MinGW C++ compiler i686-w64-mingw32-g++ to build for Windows;
+
+- zip to create release archive.
+
 ## Build
 
 For building library run

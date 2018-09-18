@@ -20,7 +20,7 @@ private:
         //init version data:
         major = 1;
         minor = 0;
-        build = 2;
+        build = 3;
     }
     ~BigIntegerVersionInfo() {}
 #if __cplusplus > 201100
