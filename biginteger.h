@@ -1,4 +1,5 @@
 /*
+    BigInteger - arbitrary-precision integer library 
     Copyright (C) 2012-2013, 2018 Yaroslav Zotov.
     
     This program is free software: you can redistribute it and/or modify
